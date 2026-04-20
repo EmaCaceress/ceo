@@ -1,0 +1,95 @@
+/* =========================
+   FLEX
+========================= */
+@mixin flex(
+  $direction: row,
+  $justify: center,
+  $align: center,
+  $gap: 0
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+/* =========================
+   CENTER ABSOLUTE
+========================= */
+@mixin center-absolute {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* =========================
+   TEXT TRUNCATE
+========================= */
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* =========================
+   TRANSITION
+========================= */
+@mixin transition($props: all, $time: 0.3s, $ease: ease) {
+  transition: $props $time $ease;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@mixin respond($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 576px) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: 768px) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: 1280px) {
+      @content;
+    }
+  }
+}
+
+/* =========================
+   HOVER (DESKTOP ONLY)
+========================= */
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+}
+
+/* =========================
+   BOX SHADOW
+========================= */
+@mixin box-shadow($level: md) {
+  @if $level == sm {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  } @else if $level == md {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  } @else if $level == lg {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+} 

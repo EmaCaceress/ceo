@@ -1,0 +1,143 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.capturer-container {
+    margin: 0;
+    font-family: $font-base;
+    background: $color-bg-soft;
+    height: 100dvh;
+  }
+
+  .header {
+    position: sticky;
+    top: 0px;
+    @include box-shadow(lg);
+    .navbar{
+      @include box-shadow(lg);
+      background-color: $color-bg-soft;
+      position: relative;
+      z-index: 5;
+      @include flex(row, space-between, center);
+      height: 60px;
+      padding: 0px $space-md;
+      width: 100%;  
+      img{
+        height: 100%;
+        cursor: pointer;
+        display: block;
+        padding: $space-sm;
+        &:nth-child(1){
+          border-radius: $radius-full;
+        }
+      }
+    }
+    
+    .ocultable-inputs {
+      @include box-shadow(lg);
+      z-index: 1;
+      width: 100%;
+      position: absolute;
+      transition: all 0s ease-in-out;
+      padding: $space-lg $space-md;
+      overflow: hidden;
+      background-color: $color-bg-soft;
+    }
+  }
+  .ocultable-black{
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    height: 100vh;
+    width: 100vw;
+  }
+  .content {
+    padding: $space-lg $space-md;
+  }
+  h1 {
+    font-size: $font-size-xl;
+    text-align: center;
+    margin-bottom: $space-md;
+    color: $color-text;
+  }
+
+  .info {
+    text-align: center;
+    font-size: $font-size-sm;
+    margin-top: $space-sm;
+    color: $color-text-muted;
+  }
+  
+  select,
+  button,
+  input {
+    width: 100%;
+    padding: $space-md;
+    font-size: $font-size-base;
+    margin-bottom: $space-sm;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    cursor: pointer;
+    box-sizing: border-box;
+  
+    @include transition;
+  }
+  
+  select {
+    background: $color-bg;
+    border: 1px solid $color-border;
+  }
+  
+  button {
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  
+    &.refresh {
+      background: $color-primary;
+      color: white;
+  
+      @include hover {
+        background: $color-primary-dark;
+      }
+    }
+  
+    &.download {
+      background: $color-accent;
+      color: white;
+  
+      @include hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+  
+  .image-wrapper {
+    position: relative;
+    background: $color-bg;
+    border-radius: $radius-lg;
+    padding: $space-sm;
+  
+    @include box-shadow(md);
+  
+    img {
+      width: 100%;
+      border-radius: $radius-sm;
+      display: block;
+    }
+  
+    .overlay-text {
+      position: absolute;
+      top: $space-sm;
+      right: $space-sm;
+      background: rgba(0, 0, 0, 0.75);
+      color: white;
+      padding: $space-xs $space-sm;
+      border-radius: $radius-sm;
+      font-weight: bold;
+      font-size: $font-size-base;
+      pointer-events: none;
+    }
+  }
+  
