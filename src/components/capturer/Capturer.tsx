@@ -1,4 +1,4 @@
-import React, { use, useEffect } from "react";
+import React, { useEffect } from "react";
 import './Capturer.scss';
 import menuOpen from '../../assets/clave.png';
 import menuClose from '../../assets/close.png';
@@ -19,7 +19,7 @@ const Capturer: React.FC = () => {
     const [image, setImage] = React.useState<string | null>(null);
     const [selector, setSelector] = React.useState<string>(""); //Salida seleccionada
     const [delay, setDelay] = React.useState<string>(""); //Tiempo de refresco en segundos
-    const [active, setActive] = React.useState<string>(""); //Valor activo para el nombre de la imagen
+    const active = React.useState<string>(""); //Valor activo para el nombre de la imagen
     const downloadImage = () => {
         if (image) {
             const name =  active && selector ? `${nodo}_${active || "B01"}_${selector}.png` : "grafica.png";
