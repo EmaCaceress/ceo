@@ -25,11 +25,22 @@ export const validatedInput = (obj : unknown) => {
     }
 };
 
-export const validatedOutput = (obj : unknown) => {
-    if (!obj) {
-        toast.error("Datos inválidos");
+interface Status {
+    ok: boolean;
+    statusText: string;
+    status: number;
+}
+
+export const validatedOutput = (server : Status, obj: unknown, msj: string) => {
+
+    if (server.status === 404) {
+        toast.error("Nodo no encontrado, verifica el nodo ingresado");
+        return false;   
+    } else if (server.status === 500) {
+        toast.error("Error en el servidor, intenta nuevamente más tarde");
         return false;
+    } else {
+        toast.success(msj);
+        return true;
     }
-    toast.success("logueado correctamente");
-    return true;
 }

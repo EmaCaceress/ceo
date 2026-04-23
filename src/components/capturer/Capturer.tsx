@@ -5,7 +5,7 @@ import menuClose from '../../assets/close.png';
 import { refresh } from "../../server/server";
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
-
+import refreshIcon from '../../assets/refresh.png'
 const logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAYFBMVEVJHohGF4ZHGodoTJpjRZdlR5hNI4tYNZA9AIL////z8fc4AIBEFIV3X6PUzuE7AIFBDYSIdK2ik77Ox90yAH3h3erDutXb1uawpMj29Pl+Z6ernsS6sM+ZiLjs6fKPfbJqnnyWAAAAl0lEQVR4Ac3PRRLDQAxEUUkxMzPc/5SGDieadfJXXfUMM/Sf8Zk8t7zixbIs2xFs+5jui3r+WRAeM4rPmaRPzHJo4d2xfEGqamgkGrIFbEINKWygFvOlbtu2815RImBdEYdHsGdeAc0z0qqCE/tQxWzAq6Onv5pAHdGQXeB5C6VwMiDyTJ8FzoYDoWrRr4KiYc3IrLCftgOwLwhHYXg9PQAAAABJRU5ErkJggg==';
 
 const Capturer: React.FC = () => {
@@ -16,7 +16,7 @@ const Capturer: React.FC = () => {
     const [nodo, setNodo] = React.useState<string>(""); //ID del nodo
     const [nodoType, setNodoType] = React.useState<string>(""); //Tipo de nodo (RPHY o LEGACY)
     const [frecuency, setFrecuency] = React.useState<string>(""); //Frecuencia para la gráfica
-    const [image, setImage] = React.useState<string | null>(null);
+    const [image, setImage] = React.useState<string | null>(null); //URL de la imagen a mostrar
     const [selector, setSelector] = React.useState<string>(""); //Salida seleccionada
     const [delay, setDelay] = React.useState<string>(""); //Tiempo de refresco en segundos
     const active = React.useState<string>(""); //Valor activo para el nombre de la imagen
@@ -46,12 +46,16 @@ const Capturer: React.FC = () => {
         };
     
         const IMG: string | null = await refresh(preload);
-        setImage(IMG ? `${IMG}?t=${Date.now()}` : null);
+        setImage(IMG ? `${IMG}?t=${Date.now()}` : refreshIcon); // Agrega un timestamp para evitar caché
         setRefreshDisable(false);
     };
 
     useEffect(() => {
-        fetchAndSetImage();
+        if (image === null){
+            setImage(refreshIcon);
+        }else{
+            fetchAndSetImage();
+        }
     }, []); 
 
     return (
@@ -126,8 +130,10 @@ const Capturer: React.FC = () => {
                 <button id="btnDownload" className="download" onClick={()=>downloadImage()}>⬇️ Descargar imagen</button>
 
                 <div className="image-wrapper" >
+                    <div>
+                        <div id="overlay" className="overlay-text" >{selector}</div>
+                    </div>
                     {image ? <img src={image} alt="grafica" /> : null}
-                    <div id="overlay" className="overlay-text" >{selector}</div>
                 </div>
 
                 <div className="info" id="info"></div>

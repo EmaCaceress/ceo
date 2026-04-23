@@ -11,6 +11,7 @@
   .header {
     position: sticky;
     top: 0px;
+    z-index: 5;
     @include box-shadow(lg);
     .navbar{
       @include box-shadow(lg);
@@ -49,7 +50,7 @@
     z-index: 1;
     top: 0px;
     height: 100vh;
-    width: 100vw;
+    width: 100%;
   }
   .content {
     padding: $space-lg $space-md;
@@ -114,7 +115,6 @@
   }
   
   .image-wrapper {
-    position: relative;
     background: $color-bg;
     border-radius: $radius-lg;
     padding: $space-sm;
@@ -126,7 +126,9 @@
       border-radius: $radius-sm;
       display: block;
     }
-  
+    div{
+      position: relative; 
+    }
     .overlay-text {
       position: absolute;
       top: $space-sm;
