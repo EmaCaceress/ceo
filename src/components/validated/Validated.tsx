@@ -31,7 +31,7 @@ interface Status {
     status: number;
 }
 
-export const validatedOutput = (server : Status, obj: unknown, msj: string) => {
+export const validatedOutput = (server : Status, msj: string) => {
 
     if (server.status === 404) {
         toast.error("Nodo no encontrado, verifica el nodo ingresado");

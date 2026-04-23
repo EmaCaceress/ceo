@@ -1,6 +1,6 @@
 import { validatedInput, validatedOutput } from "../components/validated/Validated";
 
-const server_url : string = import.meta.env.SERVER || 'http://localhost:4000';
+const server_url : string = import.meta.env.VITE_SERVER || "http://localhost:4000";    
 
 export async function getToken(username: string, password: string) {
     const obj = { username, password };
@@ -12,7 +12,7 @@ export async function getToken(username: string, password: string) {
     });
     const data = await login.json();
     const token = data.token;
-    if(!validatedOutput(login, token, "Logueado correctamente")) return false;
+    if(!validatedOutput(login, "Logueado correctamente")) return false;
     return token;
 }
 
@@ -26,7 +26,7 @@ export async function refresh (preload: { code: string, nodo: string, nodoType: 
         });
         const imgReq = await reqImage.json();
         const imgUrl = imgReq.url;
-        if(!validatedOutput(reqImage ,imgUrl, "Refresco completado")) return false;
+        if(!validatedOutput(reqImage, "Refresco completado")) return false;
         return imgUrl;
     } catch {
       console.log("Error al actualizar la gráfica");

@@ -18,11 +18,12 @@ const Capturer: React.FC = () => {
     const [frecuency, setFrecuency] = React.useState<string>(""); //Frecuencia para la gráfica
     const [image, setImage] = React.useState<string | null>(null); //URL de la imagen a mostrar
     const [selector, setSelector] = React.useState<string>(""); //Salida seleccionada
-    const [delay, setDelay] = React.useState<string>(""); //Tiempo de refresco en segundos
-    const active = React.useState<string>(""); //Valor activo para el nombre de la imagen
+    // const [delay, setDelay] = React.useState<string>(""); //Tiempo de refresco en segundos
+    // const active = React.useState<string>(""); //Valor activo para el nombre de la imagen
     const downloadImage = () => {
         if (image) {
-            const name =  active && selector ? `${nodo}_${active || "B01"}_${selector}.png` : "grafica.png";
+            // active && selector ? `${nodo}_${active || "B01"}_${selector}.png` : 
+            const name = "grafica.png";
             saveAs(image, name);
         } else {
             toast.error("No hay imagen para descargar");
@@ -99,7 +100,7 @@ const Capturer: React.FC = () => {
                 {/* <!-- selector --> */}
                 <label htmlFor="etiqueta">Seleccionar salida:</label>
                 <select id="etiqueta" value={selector} onChange={(e) => setSelector(e.target.value)}>   
-                    <option value="">— Seleccionar —</option>
+                    <option value="">— Sin asignar —</option>
                     <option>AUXILIAR 1</option>
                     <option>AUXILIAR 2</option> 
                     <option>MAIN</option>
@@ -116,8 +117,8 @@ const Capturer: React.FC = () => {
                 <input type="number" id="frecuencia" placeholder="horizontal" value={frecuency} onChange={(e) => setFrecuency(e.target.value)}/>
 
                 {/* <!-- frecuencia --> */}
-                <label htmlFor="delay">Tiempo de refresco:</label>
-                <input type="number" id="delay" placeholder="delay" value={delay} onChange={(e) => setDelay(e.target.value)}/>
+                {/* <label htmlFor="delay">Tiempo de refresco:</label>
+                <input type="number" id="delay" placeholder="delay" value={delay} onChange={(e) => setDelay(e.target.value)}/> */}
 
                 <button
                     id="btnRefresh"
