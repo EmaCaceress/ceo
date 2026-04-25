@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.scss";
 import { getToken } from "../../server/server";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,13 @@ export const Login: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setpassword] = useState<string>("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/graph");
+    }
+  }, []);
 
   const singUp = async () => {
     try {
