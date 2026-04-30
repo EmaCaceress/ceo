@@ -32,10 +32,12 @@ interface Status {
 }
 
 export const validatedOutput = (server : Status, msj: string) => {
-
     if (server.status === 404) {
         toast.error("Nodo no encontrado, verifica el nodo ingresado");
-        return false;   
+        return false; 
+    } else if (server.status === 401) {
+        toast.error("Credenciales incorrectas")
+        return false;  
     } else if (server.status === 500) {
         toast.error("Error en el servidor, intenta nuevamente más tarde");
         return false;

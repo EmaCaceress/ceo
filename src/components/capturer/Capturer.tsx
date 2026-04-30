@@ -21,13 +21,55 @@ const Capturer: React.FC = () => {
     // const [delay, setDelay] = React.useState<string>(""); //Tiempo de refresco en segundos
     // const active = React.useState<string>(""); //Valor activo para el nombre de la imagen
     const downloadImage = () => {
-        if (image) {
-            // active && selector ? `${nodo}_${active || "B01"}_${selector}.png` : 
-            const name = "grafica.png";
-            saveAs(image, name);
-        } else {
-            toast.error("No hay imagen para descargar");
+        if (!image) {
+          toast.error("No hay imagen para descargar");
+          return;
         }
+      
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+      
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+      
+          if (!ctx) return;
+      
+          canvas.width = img.width;
+          canvas.height = img.height;
+      
+          // dibujar imagen
+          ctx.drawImage(img, 0, 0);
+      
+          // 🎯 CONFIG TEXTO
+          const padding = 10;
+          ctx.font = "48px Arial";
+      
+          const textWidth = ctx.measureText(selector).width;
+          const textHeight = 48; // aprox altura del texto
+      
+          // 📍 posición arriba derecha
+          const x = canvas.width - textWidth - padding * 2;
+          const y = padding;
+      
+          // 🟩 fondo negro (recuadro)
+          ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+          ctx.fillRect(x - padding / 2, y, textWidth + padding, textHeight);
+      
+          // ✍️ texto
+          ctx.fillStyle = "white";
+          ctx.textBaseline = "top";
+          ctx.fillText(selector, x, y + 2);
+      
+          // descargar
+          canvas.toBlob((blob) => {
+            if (blob) {
+              saveAs(blob, "grafica.png");
+            }
+          });
+        };
+      
+        img.src = image;
       };
 
     const desplace: () => void = () => {
@@ -35,8 +77,10 @@ const Capturer: React.FC = () => {
         setIsOpen(prev => !prev);
     }; 
 
-
     const fetchAndSetImage = async () => {
+        localStorage.setItem("code", code);
+        localStorage.setItem("nodo", nodo);
+        localStorage.setItem("nodoType", nodoType);
         setRefreshDisable(true);
         const preload = {
             code,
@@ -57,6 +101,9 @@ const Capturer: React.FC = () => {
         }else{
             fetchAndSetImage();
         }
+        setCode(localStorage.getItem("code") || "");
+        setNodo(localStorage.getItem("nodo") || "");
+        setNodoType(localStorage.getItem("nodoType") || "");
     }, []); 
 
     return (

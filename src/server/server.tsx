@@ -12,7 +12,7 @@ export async function getToken(username: string, password: string) {
     });
     const data = await login.json();
     const token = data.token;
-    if(!validatedOutput(login, "Logueado correctamente")) return false;
+    if(!validatedOutput(login, "Logueado correctamente") && token) return false;
     return token;
 }
 
