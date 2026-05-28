@@ -6,7 +6,7 @@
   background: $color-secondary;
 
   @include flex(row, center, center);
-
+  flex-direction: column;
 
 
   .admin-card {
@@ -59,9 +59,7 @@
   }
 
   .users-list {
-    max-height: 350px;
     overflow-y: auto;
-    margin-bottom: $space-xl;
 
     @include flex(column, flex-start, stretch, $space-md);
   }
@@ -107,24 +105,6 @@
       color: $color-text-muted;
 
       @include truncate;
-    }
-  }
-
-  .save-btn {
-    width: 100%;
-    height: 50px;
-    border: none;
-    border-radius: $radius-lg;
-    background: $color-primary;
-    color: white;
-    font-size: $font-size-base;
-    font-weight: 600;
-    cursor: pointer;
-
-    @include transition(all);
-
-    @include hover {
-      background: $color-primary-dark;
     }
   }
 
@@ -174,4 +154,32 @@
   .switch input:checked + .slider::before {
     transform: translateX(22px);
   }
+  .container-btn {
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    padding: $space-lg 0;
+    background-color: $color-bg;
+    .save-btn {
+      width: 80%;
+      height: 50px;
+      border: none;
+      border-radius: $radius-lg;
+      background: $color-primary;
+      color: white;
+      font-size: $font-size-base;
+      font-weight: 600;
+      cursor: pointer;
+  
+      @include transition(all);
+  
+      @include hover {
+        background: $color-primary-dark;
+      }
+    }
+  
+  } 
 }

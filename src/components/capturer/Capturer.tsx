@@ -135,15 +135,15 @@ const Capturer: React.FC = () => {
                                     position: "absolute",
                                     top: "50%",
                                     left: "50%",
-                                    width: "100dvh",
-                                    height: "100dvw",
-                                    objectFit: "cover",
+                                    width: "100vh",
+                                    height: "100vw",
+                                    objectFit: "contain",
                                     transform: "translate(-50%, -50%) rotate(90deg)",
                                     maxWidth: "none",
                                     zIndex: -1,
                                 }}
                             />
-                            <div className="containerButtons">
+                            <div className="containerButtons" style={{position: "relative", bottom: "55px"}}>
                                 <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()}><img className="containerButtons__img" src={refreshButton} style={{rotate: "90deg"}}/></button>
                                 <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton} style={{rotate: "90deg"}}/></button>
                                 <button id="btnExpand" className="expand" onClick={()=>setExpand(false)}><img className="containerButtons__img" src={expandButton} style={{rotate: "90deg"}}/></button>

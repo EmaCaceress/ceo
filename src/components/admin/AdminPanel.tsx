@@ -95,12 +95,12 @@ const AdminPanel = () => {
             ))}
           </div>
         </div>
-
-
-        <button className="save-btn" onClick={handleSubmit}>
-          Guardar clave
-        </button>
       </div>
+      <div className="container-btn">
+          <button className="save-btn" onClick={handleSubmit}>
+            Guardar clave
+          </button>
+        </div>
     </section>
   );
 };

@@ -9,77 +9,78 @@
 
   @include flex(row, center, center);
   padding: $space-md;
-}
 
-.logout-modal {
-  width: 100%;
-  max-width: 420px;
 
-  background: $color-bg;
-  border-radius: $radius-lg;
+  .logout-modal {
+    width: 100%;
+    max-width: 420px;
 
-  padding: $space-xl;
+    background: $color-bg;
+    border-radius: $radius-lg;
 
-  @include box-shadow(lg);
+    padding: $space-xl;
 
-  h2 {
-    text-align: center;
-    font-size: $font-size-sm * 1.1;
-    color: $color-text;
-    margin-bottom: $space-xl;
-  }
+    @include box-shadow(lg);
 
-  p {
-    color: $color-text-muted;
-    font-size: $font-size-base;
-    margin-bottom: $space-xl;
-    line-height: 1.5;
-  }
-}
+    h2 {
+      text-align: center;
+      font-size: $font-size-sm * 1.1;
+      color: $color-text;
+      margin-bottom: $space-xl;
+    }
 
-.logout-modal-buttons {
-  @include flex(row, flex-end, center, $space-md);
-
-  @include respond(sm) {
-    flex-direction: column;
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-    min-width: 140px;
-    height: 46px;
-
-    border: none;
-    border-radius: $radius-md;
-
-    font-size: $font-size-base;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    @include transition(all);
-
-    @include respond(sm) {
-      width: 100%;
+    p {
+      color: $color-text-muted;
+      font-size: $font-size-base;
+      margin-bottom: $space-xl;
+      line-height: 1.5;
     }
   }
-}
 
-.cancel-btn {
-  background: $color-bg-soft;
-  color: $color-text;
+  .logout-modal-buttons {
+    @include flex(row, flex-end, center, $space-md);
 
-  @include hover {
-    opacity: 0.85;
+    @include respond(sm) {
+      flex-direction: column;
+    }
+
+    button {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 46px;
+      padding: 0 $space-lg;
+      border: none;
+      border-radius: $radius-md;
+
+      font-size: $font-size-base;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      @include transition(all);
+
+      @include respond(sm) {
+        width: 100%;
+      }
+    }
   }
-}
 
-.confirm-btn {
-  background: $color-error;
-  color: white;
+  .cancel-btn {
+    background: $color-bg-soft;
+    color: $color-text;
 
-  @include hover {
-    opacity: 0.9;
+    @include hover {
+      opacity: 0.85;
+    }
+  }
+
+  .confirm-btn {
+    background: $color-error;
+    color: white;
+
+    @include hover {
+      opacity: 0.9;
+    }
   }
 }
