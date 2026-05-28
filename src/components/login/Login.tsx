@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.scss";
-import { getToken } from "../../server/server";
+import { generatedToken } from "../../server/server";
 import { useNavigate } from "react-router-dom";
 
 export const Login: React.FC = () => {
@@ -10,7 +10,7 @@ export const Login: React.FC = () => {
 
   const singUp = async () => {
     try {
-      const token = await getToken(username, password);
+      const token = await generatedToken(username, password);
       if(!token) return;
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);

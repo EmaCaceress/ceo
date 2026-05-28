@@ -1,0 +1,62 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+@use "sass:color";
+.header {
+  position: sticky;
+  top: 0px;
+  z-index: 5;
+  @include box-shadow(lg);
+  .navbar{
+    @include box-shadow(lg);
+    background-color: $color-bg-soft;
+    position: relative;
+    z-index: 5;
+    @include flex(row, space-between, center);
+    height: 60px;
+    padding: $space-sm $space-md;
+    width: 100%;
+    gap:$space-md;
+    img{
+      height: 100%;
+      cursor: pointer;
+      display: block;
+      padding: $space-xs;
+      &:nth-child(1){
+        border-radius: $radius-full;
+      }
+    }
+  }
+  
+  .ocultable-list {
+    @include box-shadow(lg);
+    display: flex;
+    flex-direction: column;
+    gap: $space-md;
+    z-index: 1;
+    font-size: $font-size-lg;
+    font-weight: 500;
+    width: 100%;
+    position: absolute;
+    transition: all 0s ease-in-out;
+    padding: $space-lg $space-md;
+    background-color: $color-bg-soft;
+    .ocultable-list__close{
+      background-color: $color-error;
+      color: white;
+      padding: $space-sm;
+      border-radius: $radius-sm;
+      text-align: center;
+       &:hover{
+        background-color: color.adjust($color-error, $lightness: -10%);
+       }
+    }
+  }
+}
+.ocultable-black{
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  height: 100vh;
+  width: 100%;
+}

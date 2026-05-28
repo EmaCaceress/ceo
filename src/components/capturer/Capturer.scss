@@ -4,62 +4,59 @@
 .capturer-container {
     margin: 0;
     font-family: $font-base;
-    background: $color-bg-soft;
-    height: 100dvh;
-  }
+    background: $color-bg;
+    position: relative;
 
-  .header {
-    position: sticky;
-    top: 0px;
-    z-index: 5;
-    @include box-shadow(lg);
-    .navbar{
-      @include box-shadow(lg);
-      background-color: $color-bg-soft;
-      position: relative;
-      z-index: 5;
-      @include flex(row, space-between, center);
-      height: 60px;
-      padding: 0px $space-md;
-      width: 100%;  
-      img{
-        height: 100%;
-        cursor: pointer;
-        display: block;
-        padding: $space-sm;
-        &:nth-child(1){
-          border-radius: $radius-full;
+  .content {
+    padding: $space-lg $space-md;
+    gap: $space-lg;
+    display: flex;
+    flex-direction: column;
+    .title{
+      border-bottom: none;
+      font-size: $font-size-2xl;
+      color: $color-text;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    .search{
+      font-size: $font-size-base;
+      border: 1px solid rgba($color-text-muted,0.3);
+      border-radius: $radius-sm;
+      box-sizing: border-box;
+      &:focus {
+        outline: none;
+        border-color: $color-secondary;
+      }
+    }
+    .input-group {
+      margin-bottom: $space-lg;
+    
+      @include flex(column, flex-start, stretch, $space-sm);
+    
+      label {
+        font-size: $font-size-base;
+        color: rgb(12, 12, 12);
+        font-weight: 600;
+      }
+    
+      input, select {
+        @include transition(border-color);
+        
+        &:focus {
+          border-color: black;
         }
       }
     }
-    
-    .ocultable-inputs {
-      @include box-shadow(lg);
-      z-index: 1;
-      width: 100%;
-      position: absolute;
-      transition: all 0s ease-in-out;
-      padding: $space-lg $space-md;
-      overflow: hidden;
-      background-color: $color-bg-soft;
-    }
-  }
-  .ocultable-black{
-    background-color: rgba(0, 0, 0, 0.5);
-    position: absolute;
-    z-index: 1;
-    top: 0px;
-    height: 100vh;
-    width: 100%;
-  }
-  .content {
-    padding: $space-lg $space-md;
   }
   h1 {
-    font-size: $font-size-xl;
-    text-align: center;
+    font-size: $font-size-lg;
+    text-align: left;
     margin-bottom: $space-md;
     color: $color-text;
+    border-bottom: 1px solid $color-text-muted;
+    padding-bottom: $space-sm;
   }
 
   .info {
@@ -73,43 +70,69 @@
   button,
   input {
     width: 100%;
-    padding: $space-md;
+    padding: $space-lg;
+    height: 48px;
     font-size: $font-size-base;
     margin-bottom: $space-sm;
-    border: 1px solid $color-border;
+    border: 1px solid rgba($color-text-muted,0.3);
     border-radius: $radius-md;
     cursor: pointer;
     box-sizing: border-box;
-  
+    
     @include transition;
-  }
-  
-  select {
-    background: $color-bg;
-    border: 1px solid $color-border;
-  }
-  
-  button {
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
+    &:focus {
+      outline: none;
+      border-color: black;
     }
+  }
   
-    &.refresh {
-      background: $color-primary;
-      color: white;
-  
-      @include hover {
-        background: $color-primary-dark;
+  .containerButtons, .containerButtons--overlay {
+    display: flex;
+    gap: $space-lg;
+    justify-content: center;
+    margin-top: $space-md;
+    height: 60px;
+    button {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: $space-md;
+      height: 100%;
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
       }
-    }
-  
-    &.download {
-      background: $color-accent;
-      color: white;
-  
-      @include hover {
-        filter: brightness(0.9);
+      &.refresh {
+        background: $color-primary;
+        color: white;
+    
+        @include hover {
+          background: $color-primary-dark;
+        }
+      }
+      
+      &.download {
+        background: $color-accent;
+        color: white;
+    
+        @include hover {
+          filter: brightness(0.9);
+        }
+      }
+
+      &.expand {
+        background: $color-secondary-light;
+        color: white;
+    
+        @include hover {
+          filter: brightness(0.9);
+        }
+      }
+
+      .containerButtons__img {
+        width: 32px;
+        height: 32px;
       }
     }
   }
@@ -118,8 +141,7 @@
     background: $color-bg;
     border-radius: $radius-lg;
     padding: $space-sm;
-  
-    @include box-shadow(md);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   
     img {
       width: 100%;
@@ -142,4 +164,4 @@
       pointer-events: none;
     }
   }
-  
+}

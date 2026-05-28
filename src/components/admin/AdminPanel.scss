@@ -1,0 +1,177 @@
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.admin-panel {
+  width: 100%;
+  background: $color-secondary;
+
+  @include flex(row, center, center);
+
+
+
+  .admin-card {
+    width: 100%;
+    max-width: 750px;
+    background: $color-bg;
+    padding: $space-xl;
+
+    @include box-shadow(lg);
+
+    h2 {
+      font-size: $font-size-2xl;
+      color: $color-text;
+      margin-bottom: $space-xl;
+      text-align: center;
+    }
+
+    @include respond(md) {
+      padding: $space-lg;
+    }
+  }
+
+  .input-group {
+    margin-bottom: $space-lg;
+
+    @include flex(column, flex-start, stretch, $space-sm);
+
+    label {
+      font-size: $font-size-base;
+      color: rgb(12, 12, 12);
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      height: 48px;
+      border: 1px solid $color-border;
+      border-radius: $radius-md;
+      padding: 0 $space-md;
+      font-size: $font-size-base;
+      font-family: $font-base;
+      outline: none;
+
+      @include transition(border-color);
+
+      &:focus {
+        border-color: black;
+      }
+    }
+  }
+
+  .users-list {
+    max-height: 350px;
+    overflow-y: auto;
+    margin-bottom: $space-xl;
+
+    @include flex(column, flex-start, stretch, $space-md);
+  }
+
+  .user-item {
+    width: 100%;
+    padding: $space-md;
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+    background: $color-bg-soft;
+
+    @include flex(row, space-between, center);
+
+    @include transition(all);
+
+    @include hover {
+      transform: translateY(-2px);
+      border-color: $color-primary-ligth;
+    }
+
+    @include respond(sm) {
+      align-items: center;
+      gap: $space-md;
+    }
+  }
+
+  .user-info {
+    flex: 1;
+    min-width: 0;
+
+    @include flex(column, center, flex-start, $space-xs);
+
+    span {
+      font-size: $font-size-base;
+      font-weight: 600;
+      color: $color-text;
+
+      @include truncate;
+    }
+
+    small {
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+
+      @include truncate;
+    }
+  }
+
+  .save-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: $radius-lg;
+    background: $color-primary;
+    color: white;
+    font-size: $font-size-base;
+    font-weight: 600;
+    cursor: pointer;
+
+    @include transition(all);
+
+    @include hover {
+      background: $color-primary-dark;
+    }
+  }
+
+  /* =========================
+    SWITCH
+  ========================= */
+
+  .switch {
+    position: relative;
+    width: 52px;
+    height: 30px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  .slider {
+    position: absolute;
+    inset: 0;
+    border-radius: $radius-full;
+    background: #cbd5e1;
+    cursor: pointer;
+
+    @include transition(all);
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      left: 4px;
+      top: 4px;
+      border-radius: 50%;
+      background: white;
+
+      @include transition(all);
+    }
+  }
+
+  .switch input:checked + .slider {
+    background: $color-accent;
+  }
+
+  .switch input:checked + .slider::before {
+    transform: translateX(22px);
+  }
+}
