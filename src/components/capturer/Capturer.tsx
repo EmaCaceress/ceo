@@ -135,8 +135,8 @@ const Capturer: React.FC = () => {
                                     position: "absolute",
                                     top: "50%",
                                     left: "50%",
-                                    width: "100vh",
-                                    height: "100vw",
+                                    width: "100dvh",
+                                    height: "100dvw",
                                     objectFit: "cover",
                                     transform: "translate(-50%, -50%) rotate(90deg)",
                                     maxWidth: "none",
@@ -178,8 +178,6 @@ const Capturer: React.FC = () => {
                         <input type="number" id="frecuencia" placeholder="horizontal" value={frecuency} onChange={(e) => setFrecuency(e.target.value)}/>
                     </div>
                 </section>
-                
-                <div className="info" id="info"></div>
             </div>
         </div>
     );
