@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from "react";
-import "./monitoring.scss";
+import "./Monitoring.scss";
 import toast from "react-hot-toast";
 import { refreshMonitoring } from "../../server/server";
 import arrow from "../../assets/arrow.png";

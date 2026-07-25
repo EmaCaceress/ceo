@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import "./suscribers.scss";
+import "./Suscribers.scss";
 import toast from "react-hot-toast";
 import html2canvas from "html2canvas";
 import { refreshSuscribers } from "../../server/server";
