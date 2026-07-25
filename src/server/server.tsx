@@ -1,6 +1,6 @@
 import { validatedInput, validatedOutput } from "../components/validated/Validated";
 
-const server_url : string =  "http://localhost:4000";  // import.meta.env.VITE_SERVER || 
+const server_url : string = import.meta.env.VITE_SERVER || "http://localhost:4000";  // import.meta.env.VITE_SERVER || 
 
 //--------------------------------------------------------------
 // Funciones para administrar la autenticación y autorización de usuarios
