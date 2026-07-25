@@ -325,15 +325,9 @@
 
   &__empty-icon {
     @include flex(row, center, center);
-
     width: 60px;
     height: 60px;
-
     border-radius: $radius-full;
-
-    background-color: rgba($color-primary, 0.1);
-    color: $color-primary;
-
     font-size: $font-size-2xl;
   }
 
