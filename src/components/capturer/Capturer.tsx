@@ -100,7 +100,7 @@ const Capturer: React.FC = () => {
             <div className="content">
             <h1 className="title">Espectro</h1>
                 <section className="image-wrapper" >
-                    <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value)}/>
+                    <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase())}/>
 
                     <div>
                         <div id="overlay" className="overlay-text" >{selector}</div>
@@ -156,26 +156,28 @@ const Capturer: React.FC = () => {
                 <section className="config-section">
                     <h1>Configuración</h1>
                     {/* <!-- selector --> */}
-                    <div className="input-group">
-                        <label htmlFor="etiqueta">Seleccionar salida:</label>
-                        <select id="etiqueta" value={selector} onChange={(e) => setSelector(e.target.value)}>   
-                            <option value="">— Sin asignar —</option>
-                            <option>AUXILIAR 1</option>
-                            <option>AUXILIAR 2</option> 
-                            <option>MAIN</option>
-                            <option>PUERTO 1</option>
-                            <option>PUERTO 2</option>
-                            <option>PUERTO 4</option>
-                            <option>PUERTO 5</option>
-                            <option>ANTES</option>
-                            <option>DESPUES</option>
-                        </select>
-                    </div>
+                    <div className="config-section__options">
+                        <div className="input-group">
+                            <label htmlFor="etiqueta">Salida:</label>
+                            <select id="etiqueta" value={selector} onChange={(e) => setSelector(e.target.value)}>   
+                                <option value="">Sin asignar</option>
+                                <option>AUXILIAR 1</option>
+                                <option>AUXILIAR 2</option> 
+                                <option>MAIN</option>
+                                <option>PUERTO 1</option>
+                                <option>PUERTO 2</option>
+                                <option>PUERTO 4</option>
+                                <option>PUERTO 5</option>
+                                <option>ANTES</option>
+                                <option>DESPUES</option>
+                            </select>
+                        </div>
 
-                    {/* <!-- frecuencia --> */}
-                    <div className="input-group">
-                        <label htmlFor="frecuencia">Guia horizontal (roja):</label>
-                        <input type="number" id="frecuencia" placeholder="horizontal" value={frecuency} onChange={(e) => setFrecuency(e.target.value)}/>
+                        {/* <!-- frecuencia --> */}
+                        <div className="input-group">
+                            <label htmlFor="frecuencia">Guia (roja):</label>
+                            <input type="number" id="frecuencia" placeholder="horizontal" value={frecuency} onChange={(e) => setFrecuency(e.target.value)}/>
+                        </div>
                     </div>
                 </section>
             </div>

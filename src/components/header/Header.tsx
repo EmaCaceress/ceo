@@ -5,7 +5,7 @@ import menuOpen from '../../assets/menu.png';
 import menuClose from '../../assets/close.png';
 import './Header.scss';  
 import LogoutModal from "../logoutModal/LogoutModal.tsx";
-const logo = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAYFBMVEVJHohGF4ZHGodoTJpjRZdlR5hNI4tYNZA9AIL////z8fc4AIBEFIV3X6PUzuE7AIFBDYSIdK2ik77Ox90yAH3h3erDutXb1uawpMj29Pl+Z6ernsS6sM+ZiLjs6fKPfbJqnnyWAAAAl0lEQVR4Ac3PRRLDQAxEUUkxMzPc/5SGDieadfJXXfUMM/Sf8Zk8t7zixbIs2xFs+5jui3r+WRAeM4rPmaRPzHJo4d2xfEGqamgkGrIFbEINKWygFvOlbtu2815RImBdEYdHsGdeAc0z0qqCE/tQxWzAq6Onv5pAHdGQXeB5C6VwMiDyTJ8FzoYDoWrRr4KiYc3IrLCftgOwLwhHYXg9PQAAAABJRU5ErkJggg==';
+import logo from '../../assets/icon.png';
 
 const Header: React.FC = () => {
     const [elementDesplace, setElementDesplace] = React.useState<number>(-1000);
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
         <div className="header">
             {/* <!-- Navegador --> */}
             <div className="navbar" >
-                <img src={logo} alt="Logo" className="logo" />
+                <img src={logo} alt="Logo" className="logo" style={{width: "60px", height: "60px"}}/>
                 
                 {
                     isOpen
@@ -58,7 +58,8 @@ const Header: React.FC = () => {
                     role === "admin" && <Link to='/admin'>Administrar usuarios</Link>
                 }
                 <Link to='/graph'>Espectro</Link>
-                <div>Monitoria (proximamente)</div>
+                <Link to='/monitoring'>Monitoria</Link>
+                <Link to='/suscribers'>Abonados</Link>
                 <div className="ocultable-list__close" onClick={() => setCloseSession(false)}>Cerrar sesion</div>
             </div>
 

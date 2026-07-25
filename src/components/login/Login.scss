@@ -3,7 +3,7 @@
 
 .login-container {
   @include flex(column);
-  height: 100vh;
+  height: 100dvh;
   background-color: $background-color;
 
   form {

@@ -6,7 +6,6 @@
     font-family: $font-base;
     background: $color-bg;
     position: relative;
-
   .content {
     padding: $space-lg $space-md;
     gap: $space-lg;
@@ -21,20 +20,28 @@
       text-align: center;
     }
     .search{
-      font-size: $font-size-base;
-      border: 1px solid rgba($color-text-muted,0.3);
-      border-radius: $radius-sm;
-      box-sizing: border-box;
-      &:focus {
-        outline: none;
-        border-color: $color-secondary;
-      }
+      width: 100%;
+      min-width: 0;
+      padding: 0.75rem 1rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      background-color: #ffffff;
+      color: #111827;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      outline: none !important;
+      transition: border-color, box-shadow 0.2s ease;
+    }
+    .config-section__options {
+      display: flex;
+      gap: $space-md;
+      
     }
     .input-group {
-      margin-bottom: $space-lg;
-    
       @include flex(column, flex-start, stretch, $space-sm);
-    
+      flex: 1;
       label {
         font-size: $font-size-base;
         color: rgb(12, 12, 12);

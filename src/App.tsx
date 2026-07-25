@@ -7,6 +7,8 @@ import { Verification } from './components/verification/Verification';
 import Header from './components/header/Header';
 import AdminPanel from './components/admin/AdminPanel';
 import { Toaster } from "react-hot-toast";
+import Monitoring from './components/monitoring/Monitoring';
+import Suscribers from './components/suscribers/Suscribers';
 
 function PrivateLayout() {
   return (
@@ -38,6 +40,8 @@ function App() {
           {/* Privadas */}
           <Route element={<PrivateLayout />}>
             <Route path="/graph" element={<Capturer />} />
+            <Route path="/monitoring" element={<Monitoring />} />
+            <Route path="/suscribers" element={<Suscribers />} />
             <Route path="/admin" element={<AdminPanel />} />
           </Route>
 

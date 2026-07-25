@@ -1,0 +1,510 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.suscribers {
+  padding: $space-xl;
+  background-color: $color-bg-soft;
+  font-family: $font-base;
+  color: $color-text;
+
+  &__container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    @include flex(row, space-between, flex-start, $space-lg);
+
+    margin-bottom: $space-xl;
+  }
+
+  &__heading {
+    @include flex(column, flex-start, flex-start, $space-xs);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-2xl;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__download-button {
+    flex-shrink: 0;
+
+    padding: 0.75rem $space-lg;
+
+    border: 1px solid $color-primary;
+    border-radius: $radius-md;
+
+    background-color: $color-bg;
+    color: $color-primary;
+
+    font-family: $font-base;
+    font-size: $font-size-sm;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    @include transition((background-color, color, transform), 0.2s);
+
+    @include hover {
+      background-color: $color-primary;
+      color: $color-bg;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Buscador
+  // ---------------------------------------------------------------
+
+  &__search {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    align-items: end;
+    gap: $space-md;
+
+    margin-bottom: $space-xl;
+    padding: $space-lg;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+
+    background-color: $color-bg;
+
+    @include box-shadow(sm);
+  }
+
+  &__field {
+    @include flex(row, flex-start, stretch, $space-xs);
+    &--filter {
+      flex-direction: column;
+    }
+  }
+
+  &__field-label {
+    font-size: 1rem;
+    color: rgb(12, 12, 12);
+    font-weight: 600;
+  }
+
+  &__field-input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #111827;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    outline: none !important;
+    transition: border-color, box-shadow 0.2s ease;
+  }
+  &__status{
+    @include flex(row, flex-start, stretch, $space-xs);
+  }
+  &__statusButton {
+    flex-shrink: 0;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #111827;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    outline: none !important;
+    transition: border-color, box-shadow 0.2s ease;
+    height: 100%;
+
+    &--all {
+      flex: 1;
+      border: 1px solid #111827;
+      color: #111827; // Color de texto para el botón "Todos"
+    }
+    &--activeAll {
+      flex: 1;
+      background-color: #111827; // Color de fondo para el botón "Todos"
+      color: #ffffff; // Color de texto para el botón "Todos"
+    }
+
+    &--up {
+      flex: 1;
+      border: 1px solid #065f46;
+      color: #065f46; // Color de texto para el botón "Arriba"
+    }
+    &--activeUp {
+      flex: 1;
+      background-color: #065f46; // Color de fondo para el botón "Arriba"
+      color: #ffffff; // Color de texto para el botón "Arriba"
+    }
+
+    &--down {
+      flex: 1;
+      border: 1px solid #991b1b;
+      color: #991b1b; // Color de texto para el botón "Caído"
+    }
+    &--activeDown {
+      flex: 1;
+      background-color: #991b1b; // Color de fondo para el botón "Caído"
+      color: #ffffff; // Color de texto para el botón "Caído"
+    }
+  }
+  &__search-button {
+    padding: 0.75rem 1.5rem;
+    border: 0;
+    border-radius: 8px;
+    background-color: #8422bd;
+    color: #ffffff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color, transform, opacity 0.2s ease;
+  }
+
+  // ---------------------------------------------------------------
+  // Resultados
+  // ---------------------------------------------------------------
+
+  &__results {
+    @include flex(column, flex-start, stretch, $space-sm);
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__result-card {
+    width: 100%;
+
+    @include flex(row, flex-start, center, $space-md);
+
+    padding: $space-md $space-lg;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+
+    background-color: $color-bg;
+
+    cursor: pointer;
+    text-align: left;
+
+    @include transition((transform, box-shadow), 0.2s);
+
+    @include hover {
+      transform: translateY(-2px);
+      @include box-shadow(md);
+    }
+  }
+
+  &__result-status {
+    flex-shrink: 0;
+
+    width: 10px;
+    height: 10px;
+    border-radius: $radius-full;
+
+    &--up {
+      background-color: $color-accent;
+    }
+
+    &--down {
+      background-color: $color-error;
+    }
+  }
+
+  &__result-info {
+    flex: 1;
+    min-width: 0;
+
+    @include flex(column, center, flex-start, 2px);
+  }
+
+  &__result-cliente {
+    font-size: $font-size-sm;
+    font-weight: 700;
+  }
+
+  &__result-direccion {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__result-estado {
+    flex-shrink: 0;
+
+    font-size: $font-size-xs;
+    font-weight: 600;
+    color: $color-text-muted;
+  }
+
+  // ---------------------------------------------------------------
+  // Loading / empty
+  // ---------------------------------------------------------------
+
+  &__loading,
+  &__empty {
+    min-height: 260px;
+
+    @include flex(column, center, center, $space-md);
+
+    text-align: center;
+  }
+
+  &__loader {
+    width: 38px;
+    height: 38px;
+
+    border: 3px solid $color-border;
+    border-top-color: $color-primary;
+    border-radius: $radius-full;
+
+    animation: suscribers-spin 0.8s linear infinite;
+  }
+
+  &__loading-text {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__empty-icon {
+    @include flex(row, center, center);
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: $radius-full;
+
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
+
+    font-size: $font-size-2xl;
+  }
+
+  &__empty-title {
+    margin: 0;
+    font-size: $font-size-xl;
+  }
+
+  &__empty-text {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  // ---------------------------------------------------------------
+  // Modal de detalle
+  // ---------------------------------------------------------------
+
+  &__modal-overlay {
+    position: fixed;
+    inset: 0;
+
+    @include flex(row, center, center);
+
+    padding: $space-lg;
+
+    background-color: rgba(0, 0, 0, 0.45);
+
+    z-index: 1000;
+  }
+
+  &__modal {
+    width: 100%;
+    max-width: 640px;
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    padding: $space-xl;
+
+    border-radius: $radius-lg;
+
+    background-color: $color-bg;
+
+    @include box-shadow(md);
+  }
+
+  &__modal-header {
+    @include flex(row, space-between, flex-start, $space-md);
+
+    margin-bottom: $space-md;
+  }
+
+  &__modal-title {
+    margin: 0;
+    font-size: $font-size-xl;
+    font-weight: 700;
+  }
+
+  &__modal-subtitle {
+    margin: $space-xs 0 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__modal-close {
+    flex-shrink: 0;
+
+    width: 32px;
+    height: 32px;
+
+    border: 0;
+    border-radius: $radius-full;
+
+    background-color: $color-bg-soft;
+    color: $color-text;
+
+    font-size: $font-size-sm;
+    cursor: pointer;
+
+    @include transition(background-color, 0.2s);
+
+    @include hover {
+      background-color: $color-border;
+    }
+  }
+
+  &__modal-badge {
+    display: inline-block;
+
+    margin-bottom: $space-lg;
+    padding: $space-xs $space-md;
+
+    border-radius: $radius-sm;
+
+    font-size: $font-size-xs;
+    font-weight: 700;
+
+    &--up {
+      background-color: rgba($color-accent, 0.12);
+      color: $color-accent;
+    }
+
+    &--down {
+      background-color: rgba($color-error, 0.12);
+      color: $color-error;
+    }
+  }
+
+  &__modal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-md;
+  }
+
+  &__modal-item {
+    @include flex(column, flex-start, flex-start, 2px);
+
+    padding-bottom: $space-sm;
+    border-bottom: 1px solid rgba($color-border, 0.6);
+  }
+
+  &__modal-item-label {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+  }
+
+  &__modal-item-value {
+    font-size: $font-size-base;
+    font-weight: 700;
+    color: $color-primary;
+  }
+
+  // ---------------------------------------------------------------
+  // Tabla oculta para exportar a JPG (html2canvas)
+  // ---------------------------------------------------------------
+
+  &__export-anchor {
+    position: fixed;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  &__export-table {
+    padding: $space-lg;
+    background-color: $color-bg;
+
+    table {
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: $space-xs $space-sm;
+      border: 1px solid $color-border;
+
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    thead th {
+      background-color: $color-bg-soft;
+      color: $color-primary;
+      font-weight: 700;
+    }
+  }
+
+  @include respond(md) {
+    padding: $space-lg;
+
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__search {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    &__modal-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @include respond(sm) {
+    padding: $space-md;
+
+    &__search {
+      grid-template-columns: 1fr;
+    }
+
+    &__search-button {
+      padding: 0.75rem 1rem;
+      width: 60px;
+    }
+  }
+}
+
+@keyframes suscribers-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

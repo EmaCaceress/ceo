@@ -1,6 +1,6 @@
 import { validatedInput, validatedOutput } from "../components/validated/Validated";
 
-const server_url : string = import.meta.env.VITE_SERVER || "http://localhost:4000";  // import.meta.env.VITE_SERVER || 
+const server_url : string =  "http://localhost:4000";  // import.meta.env.VITE_SERVER || 
 
 //--------------------------------------------------------------
 // Funciones para administrar la autenticación y autorización de usuarios
@@ -96,6 +96,49 @@ export async function refresh (preload: { nodo: string, frecuency: string}) {
       console.log("Error al actualizar la gráfica");
     }
   };
+
+//--------------------------------------------------------------
+// Funcion para actualizar la monitoria del nodo
+//--------------------------------------------------------------
+
+export async function refreshMonitoring (preload: { nodo: string}) {
+    try {
+        if(validatedInput(preload)) return false;
+        const reqData = await fetch(server_url + "/monitoring/stats", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("token")}` },
+            body: JSON.stringify(preload)
+        });
+        const data = await reqData.json();
+        console.log(data);
+        if(!validatedOutput(reqData, "Refresco completado")) return false;
+        return data;
+    } catch {
+      console.log("Error al actualizar la monitoria del nodo");
+    }
+  };
+  
+//--------------------------------------------------------------
+// Funcion para actualizar la monitoria del nodo
+//--------------------------------------------------------------
+
+export async function refreshSuscribers (preload: { nodo: string }) {
+    try {
+        if(validatedInput(preload)) return false;
+        const reqData = await fetch(server_url + "/monitoring/suscribers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${localStorage.getItem("token")}` },
+            body: JSON.stringify(preload)
+        });
+        const data = await reqData.json();
+        console.log(data);
+        if(!validatedOutput(reqData, "Refresco completado")) return false;
+        return data;
+    } catch {
+      console.log("Error al actualizar la monitoria del nodo");
+    }
+  };
+
 
 //--------------------------------------------------------------
 // Funciones para administrar usuarios, solo accesibles para el admin

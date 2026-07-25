@@ -1,0 +1,399 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.monitoring {
+  padding: $space-xl;
+  background-color: $color-bg-soft;
+  font-family: $font-base;
+  color: $color-text;
+
+  // Exposed as CSS custom properties so individual cards can pick an
+  // accent color at the JSX level via inline style (--card-accent).
+  --color-primary-value: #{$color-primary};
+  --color-accent-value: #{$color-accent};
+  --color-error-value: #{$color-error};
+
+  &__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    @include flex(row, space-between, flex-end, $space-lg);
+
+    margin-bottom: $space-xl;
+  }
+
+  &__heading {
+    @include flex(column, flex-start, flex-start, $space-xs);
+  }
+
+  &__title {
+    margin: 0;
+    font-size: $font-size-2xl;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin: 0;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__search {
+    @include flex(row, flex-start, stretch, $space-xs);
+  }
+
+  &__search-input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.75rem $space-md;
+
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+
+    background-color: $color-bg;
+    color: $color-text;
+
+    font-family: $font-base;
+    font-size: $font-size-base;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    outline: none !important;
+
+    @include transition((border-color, box-shadow), 0.2s);
+
+    &::placeholder {
+      color: $color-text-muted;
+      font-weight: 400;
+      text-transform: none;
+    }
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
+    }
+  }
+
+  &__search-button {
+    padding: 0.75rem $space-lg;
+
+    border: 0;
+    border-radius: $radius-md;
+
+    background-color: $color-primary;
+    color: $color-bg;
+
+    font-family: $font-base;
+    font-size: $font-size-sm;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    @include transition((background-color, transform, opacity), 0.2s);
+
+    @include hover {
+      background-color: $color-primary-dark;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__results {
+    @include flex(column, flex-start, stretch, $space-lg);
+  }
+
+  &__node-info {
+    @include flex(row, flex-start, center, $space-sm);
+  }
+
+  &__node-label {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__node-name {
+    padding: $space-xs $space-sm;
+
+    border-radius: $radius-sm;
+
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
+
+    font-size: $font-size-sm;
+  }
+
+  // ---------------------------------------------------------------
+  // Generic card shell — every section (subscribers, SNR, FEC, power)
+  // shares this so the side color indicator and title style are
+  // consistent across the whole page.
+  // ---------------------------------------------------------------
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: $space-md;
+  }
+
+  &__card {
+    position: relative;
+
+    padding: $space-lg $space-lg $space-lg calc(#{$space-lg} + 4px);
+
+    border: 1px solid $color-border;
+    border-radius: $radius-lg;
+
+    background-color: $color-bg;
+
+    overflow: hidden;
+
+    @include box-shadow(sm);
+    @include transition((transform, box-shadow), 0.2s);
+
+    &::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 4px;
+      height: 100%;
+
+      background-color: var(--card-accent, #{$color-primary});
+    }
+
+    @include hover {
+      transform: translateY(-2px);
+
+      @include box-shadow(md);
+    }
+  }
+
+  &__card-title {
+    margin: 0 0 $space-md;
+    padding-bottom: $space-sm;
+
+    border-bottom: 1px solid rgba($color-text, 0.2);
+
+    font-size: $font-size-base;
+    font-weight: 700;
+
+    &--icon {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__snr-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: $space-xs;
+  }
+
+  // ---------------------------------------------------------------
+  // Uniform data row — used by every card for its numeric content so
+  // labels and values line up with the same typography everywhere.
+  // ---------------------------------------------------------------
+
+  &__row {
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    align-items: center;
+    gap: $space-sm;
+    padding: 0.55rem 0;
+    font-size: $font-size-base;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($color-text, 0.2);
+    }
+
+    &--single {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  &__row-label {
+    color: $color-text;
+  }
+
+  &__row-sub {
+    text-align: right;
+    color: $color-text-muted;
+  }
+
+  &__row-value {
+    text-align: right;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &__value {
+    &--primary {
+      color: var(--color-primary-value);
+    }
+
+    &--accent {
+      color: var(--color-accent-value);
+    }
+
+    &--error {
+      color: var(--color-error-value);
+    }
+  }
+
+  // ---------------------------------------------------------------
+  // Subscribers card (donut chart)
+  // ---------------------------------------------------------------
+
+  &__subscribers {
+    grid-column: 1 / -1;
+  }
+
+  &__subscribers-body {
+    @include flex(row, flex-start, center);
+  }
+
+  &__donut {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+  }
+
+  &__donut-track {
+    stroke: $color-border;
+  }
+
+  &__donut-progress {
+    stroke: var(--color-accent-value);
+    transition: stroke-dasharray 0.6s ease;
+  }
+
+  &__donut-label {
+    font-size: 18px;
+    font-weight: 700;
+    fill: var(--color-accent-value);
+  }
+
+  &__subscribers-stats {
+    flex: 1;
+    min-width: 100%;
+
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // ---------------------------------------------------------------
+  // Loading / empty states
+  // ---------------------------------------------------------------
+
+  &__loading,
+  &__empty {
+    min-height: 260px;
+
+    @include flex(column, center, center, $space-md);
+
+    text-align: center;
+  }
+
+  &__loader {
+    width: 38px;
+    height: 38px;
+
+    border: 3px solid $color-border;
+    border-top-color: $color-primary;
+    border-radius: $radius-full;
+
+    animation: monitoring-spin 0.8s linear infinite;
+  }
+
+  &__loading-text {
+    margin: 0;
+
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__empty-icon {
+    @include flex(row, center, center);
+
+    width: 60px;
+    height: 60px;
+
+    border-radius: $radius-full;
+
+    background-color: rgba($color-primary, 0.1);
+    color: $color-primary;
+
+    font-size: $font-size-2xl;
+  }
+
+  &__empty-title {
+    margin: 0;
+
+    font-size: $font-size-xl;
+  }
+
+  &__empty-text {
+    margin: 0;
+
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  @include respond(md) {
+    padding: $space-lg;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__search {
+      max-width: none;
+    }
+
+    &__subscribers-body {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  @include respond(sm) {
+    padding: $space-md;
+    &__search-button{
+      padding: 0.75rem $space-md;
+      width: 60px;
+    }
+    &__card {
+      padding: $space-md $space-md $space-md calc(#{$space-md} + 4px);
+    }
+
+    &__subscribers-body {
+      align-items: center;
+    }
+  }
+}
+
+@keyframes monitoring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
