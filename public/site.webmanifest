@@ -1,6 +1,6 @@
 {
-    "name": "Mi Página",
-    "short_name": "MiApp",
+    "name": "Capturador de espectro online",
+    "short_name": "CEO",
     "icons": [
       {
         "src": "/icon-192.png",
