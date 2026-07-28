@@ -318,7 +318,7 @@ const Suscribers: React.FC = () => {
             <h1 className="suscribers__title">Abonados</h1>
 
             <p className="suscribers__description">
-              Buscá abonados por nodo, altura, ID de cliente o calle.
+              Consulta y descarga la lista de abonados de un nodo.
             </p>
           </div>
 

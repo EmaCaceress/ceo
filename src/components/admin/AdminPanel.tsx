@@ -9,7 +9,6 @@ interface User {
   email: string;
   enabled: boolean;
 }
-
 const AdminPanel = () => {
   const [keyValue, setKeyValue] = useState("");
   const [search, setSearch] = useState("");
@@ -50,7 +49,12 @@ const AdminPanel = () => {
   return (
     <section className="admin-panel">
       <div className="admin-card">
-        <h2>Panel Admin</h2>
+          <div className="heading">
+            <h1 className="title">Panel admin</h1>
+            <p className="description">
+              Habilita a los usuarios que pueden acceder a la informacion.
+            </p>
+          </div>
 
         <div className="input-group">
           <label>Ingresar clave</label>
@@ -77,7 +81,8 @@ const AdminPanel = () => {
           <div className="users-list">
             {filteredUsers.map((user) => (
               
-              <div className="user-item" key={user.id}>
+              <div className="user-item" key={user.id}
+              >
                 <div className="user-info">
                   <span>{user.username}</span>
                   <small>{user.role}</small>
@@ -98,7 +103,7 @@ const AdminPanel = () => {
       </div>
       <div className="container-btn">
           <button className="save-btn" onClick={handleSubmit}>
-            Guardar clave
+            Guardar datos
           </button>
         </div>
     </section>

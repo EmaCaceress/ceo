@@ -3,7 +3,6 @@
 
 .admin-panel {
   width: 100%;
-  background: $color-secondary;
 
   @include flex(row, center, center);
   flex-direction: column;
@@ -12,20 +11,26 @@
   .admin-card {
     width: 100%;
     max-width: 750px;
-    background: $color-bg;
     padding: $space-xl;
-
     @include box-shadow(lg);
 
+    .heading{
+      @include flex(column, flex-start, flex-start, $space-xs);
+      margin-bottom: $space-md;
+    }
     h2 {
+      margin: 0;
       font-size: $font-size-2xl;
-      color: $color-text;
-      margin-bottom: $space-xl;
-      text-align: center;
+      font-weight: 700;
+    }
+    .description {
+      margin: 0;
+      font-size: $font-size-sm;
+      color: $color-text-muted;
     }
 
     @include respond(md) {
-      padding: $space-lg;
+      padding: $space-md;
     }
   }
 
@@ -68,19 +73,19 @@
   .user-item {
     width: 100%;
     padding: $space-md;
-    border: 1px solid $color-border;
-    border-radius: $radius-lg;
-    background: $color-bg-soft;
-
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid var(--card-accent, $color-primary);
+    border-radius: 8px;
+    background: white;
     @include flex(row, space-between, center);
-
+  
     @include transition(all);
-
+  
     @include hover {
       transform: translateY(-2px);
       border-color: $color-primary-ligth;
     }
-
+  
     @include respond(sm) {
       align-items: center;
       gap: $space-md;
@@ -163,7 +168,7 @@
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
     padding: $space-lg 0;
-    background-color: $color-bg;
+    background-color: $color-bg-soft;
     .save-btn {
       width: 80%;
       height: 50px;

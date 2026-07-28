@@ -13,7 +13,7 @@
     z-index: 5;
     @include flex(row, space-between, center);
     height: 60px;
-    padding: $space-sm $space-md;
+    padding: 0.5rem 0.8rem 0.5rem 0.4rem;
     width: 100%;
     gap:$space-md;
     img{

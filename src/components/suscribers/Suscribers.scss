@@ -76,13 +76,12 @@
     grid-template-columns: repeat(4, 1fr) auto;
     align-items: end;
     gap: $space-md;
-
+    
     margin-bottom: $space-xl;
     padding: $space-lg;
 
     border: 1px solid $color-border;
     border-radius: $radius-lg;
-
     background-color: $color-bg;
 
     @include box-shadow(sm);
@@ -205,7 +204,7 @@
 
     border: 1px solid $color-border;
     border-radius: $radius-md;
-
+    border-left: 4px solid var(--card-accent, $color-primary);
     background-color: $color-bg;
 
     cursor: pointer;

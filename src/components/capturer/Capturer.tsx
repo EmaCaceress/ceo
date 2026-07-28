@@ -98,7 +98,13 @@ const Capturer: React.FC = () => {
             
 
             <div className="content">
-            <h1 className="title">Espectro</h1>
+            <div className="heading">
+                <h1 className="title">Espectro</h1>
+                <p className="description">
+                Solicita una captura de un nodo especifico.
+                </p>
+            </div>
+
                 <section className="image-wrapper" >
                     <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase())}/>
 
