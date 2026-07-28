@@ -7,7 +7,7 @@
   z-index: 5;
   @include box-shadow(lg);
   .navbar{
-    @include box-shadow(lg);
+    @include box-shadow(md);
     background-color: $color-bg-soft;
     position: relative;
     z-index: 5;

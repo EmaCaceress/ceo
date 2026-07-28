@@ -115,6 +115,10 @@
     text-transform: uppercase;
     outline: none !important;
     transition: border-color, box-shadow 0.2s ease;
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
+    }
   }
   &__status{
     @include flex(row, flex-start, stretch, $space-xs);

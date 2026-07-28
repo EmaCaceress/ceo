@@ -6,7 +6,7 @@ $color-secondary: #0f172a;
 $color-primary-ligth: #d798e6;
 $color-primary-dark: #491157;
 $color-secondary-light: #176efc;
-
+$color-border-inputs:#9d9d9d;
 $color-accent: #22c55e;
 
 $color-text: #111827;
@@ -56,9 +56,9 @@ $radius-full: 9999px;
 /* =========================
    SHADOWS
 ========================= */
-$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-$shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.45);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+$shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.45);
 
 /* =========================
    BREAKPOINTS
