@@ -3,7 +3,7 @@
 
 .login-container {
   @include flex(column);
-  height: 100dvh;
+  height: 100vh;
   background-color: $background-color;
 
   form {
@@ -19,8 +19,9 @@
     max-height: 600px;
 
     h1 {
-      margin-bottom: 2rem;
-      color: $color-primary;
+      margin: 0;
+      font-size: $font-size-2xl*1.25;
+      font-weight: 700;
     }
 
     .input-group {
@@ -28,9 +29,9 @@
       width: 100%;
 
       label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: $color-secondary;
+        font-size: $font-size-base*1.25;
+        color: rgb(12, 12, 12);
+        font-weight: 600;
       }
 
       input {
@@ -40,7 +41,8 @@
         border-radius: $radius-sm;
 
         &:focus {
-          border-color: black;
+          border-color: $color-primary;
+          box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
           outline: none;
         }
       }
@@ -50,7 +52,9 @@
       width: 100%;
       padding: 0.75rem;
       background-color: $color-primary-ligth;
-      color: $color-secondary;
+      font-size: $font-size-base*1.25;
+      color: rgb(12, 12, 12);
+      font-weight: 600;
       border: none;
       border-radius: $radius-sm;
       cursor: pointer;

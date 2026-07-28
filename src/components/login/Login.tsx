@@ -23,7 +23,7 @@ export const Login: React.FC = () => {
   return (
     <div className="login-container">
         <form className="form">
-            <h1 className="title">Login</h1>
+            <h1 className="title">Inicio</h1>
             <div className="input-group">
                 <label>Usuario</label>
                 <input type="text" name="username" placeholder="Benavidez" value={username} onChange={(e) => setUsername(e.target.value)}/>
@@ -32,7 +32,7 @@ export const Login: React.FC = () => {
                 <label>Contraseña</label>
                 <input type="password" name="password" placeholder="********" value={password} onChange={(e) => setpassword(e.target.value)}/>
             </div>
-            <input className="input-button" type="button" value="Iniciar Sesión" onClick={()=> singUp()}/>
+            <input className="input-button" type="button" value="Iniciar sesión" onClick={()=> singUp()}/>
         </form>
     </div>
   );
