@@ -73,6 +73,26 @@ const formatValue = (value: string | number | null | undefined): string => {
   return String(value);
 };
 
+const formatScientific = (value: unknown) => {
+  if (value == null || value === "" || value == 0) return "-";
+
+  const num = Number(value);
+  if (Number.isNaN(num)) return String(value);
+
+  return num
+    .toExponential(1)
+    .replace(/\.0(?=e)/, "");
+};
+
+const formatPercentage = (value: unknown) => {
+  if (value == null || value === "" || value == 0) return "-";
+
+  const num = Number(value);
+  if (Number.isNaN(num)) return String(value);
+
+  return `${(num * 100).toFixed(1).replace(/\.0$/, "")}%`;
+};
+
 interface AbonadoColumn {
   key: string;
   label: string;
@@ -98,12 +118,11 @@ const ABONADO_COLUMNS: AbonadoColumn[] = [
   { key: "pwrUsRxCmts", label: "Pwr Us RxCmts", group: "CM Power", accessor: (a) => formatValue(a.pwrUsRxCmts) },
   { key: "snrDs", label: "SNR Ds", group: "CM SNR", accessor: (a) => formatValue(a.snrDs) },
   { key: "snrUs", label: "SNR Us", group: "CM SNR", accessor: (a) => formatValue(a.snrUs) },
-  { key: "dsFecPre", label: "Ds FecPre", accessor: (a) => formatValue(a.dsFecPre) },
-  { key: "dsFecPost", label: "Ds FecPost", accessor: (a) => formatValue(a.dsFecPost) },
-  { key: "usFecPre", label: "Us FecPre", accessor: (a) => formatValue(a.usFecPre) },
-  { key: "usFecPost", label: "Us FecPost", accessor: (a) => formatValue(a.usFecPost) },
+  { key: "dsFecPre", label: "Ds FecPre", accessor: (a) => formatScientific(formatValue(a.dsFecPre)) },
+  { key: "dsFecPost", label: "Ds FecPost", accessor: (a) => formatScientific(formatValue(a.dsFecPost)) },
+  { key: "usFecPre", label: "Us FecPre", accessor: (a) => formatPercentage(formatValue(a.usFecPre)) },
+  { key: "usFecPost", label: "Us FecPost", accessor: (a) => formatPercentage(formatValue(a.usFecPost)) },
   { key: "mtr", label: "MTR", accessor: (a) => formatValue(a.mtr) },
-  { key: "firma", label: "Firma", accessor: (a) => formatValue(a.firma) },
   { key: "cmPnmSeveridad", label: "cmPnm.severidad", accessor: (a) => formatValue(a.cmPnmSeveridad) },
   { key: "idEdificio", label: "ID Edificio", accessor: (a) => formatValue(a.idEdificio) },
 ];
@@ -395,9 +414,9 @@ const Suscribers: React.FC = () => {
               </label>
 
               <div className="suscribers__status">
-                <div className={`suscribers__statusButton suscribers__statusButton--all ${filters.all ? "suscribers__statusButton--activeAll" : ""}`} onClick={()=> handleStatusFilter("all")}> Todos </div>
-                <div className={`suscribers__statusButton suscribers__statusButton--up ${filters.up ? "suscribers__statusButton--activeUp" : ""}`} onClick={()=> handleStatusFilter("up")}> Arriba </div>
-                <div className={`suscribers__statusButton suscribers__statusButton--down ${filters.down ? "suscribers__statusButton--activeDown" : ""}`} onClick={()=> handleStatusFilter("down")}> Caído </div>
+                <div className={`suscribers__statusButton suscribers__statusButton--all ${filters.all ? "suscribers__statusButton--activeAll" : ""}`} onClick={()=> handleStatusFilter("all")}>Todos</div>
+                <div className={`suscribers__statusButton suscribers__statusButton--up ${filters.up ? "suscribers__statusButton--activeUp" : ""}`} onClick={()=> handleStatusFilter("up")}>Arriba</div>
+                <div className={`suscribers__statusButton suscribers__statusButton--down ${filters.down ? "suscribers__statusButton--activeDown" : ""}`} onClick={()=> handleStatusFilter("down")}>Caído</div>
               </div>
             </div>
 
@@ -484,7 +503,16 @@ const Suscribers: React.FC = () => {
               {abonadosParaExportar.map((abonado) => (
                 <tr key={abonado.idCliente}>
                   {ABONADO_COLUMNS.map((column) => (
-                    <td key={column.key}>{column.accessor(abonado)}</td>
+                    <td style={{
+                      backgroundColor:
+                      column.accessor(abonado) === "VERDE"
+                          ? "green"
+                          : column.accessor(abonado) === "AMARILLO"
+                          ? "yellow"
+                          : column.accessor(abonado) === "ROJO"
+                          ? "red"
+                          : undefined,
+                    }}key={column.key}>{column.accessor(abonado)}</td>
                   ))}
                 </tr>
               ))}
