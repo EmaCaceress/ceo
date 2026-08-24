@@ -64,12 +64,11 @@ export function decodeHeatmap(raw: string): DecodedHeatmap {
 
   let col = 0;
   let row = 0;
-  let lastWeight = -1;
-
+  
   for (let u = 32; u < raw.length; u += 2) {
     const weight = sextetValue(raw[u]);
     let count = sextetValue(raw[u + 1]);
-
+  
     while (col + count > header.width) {
       const fillCurrentRow = header.width - col;
       if (fillCurrentRow > 0 && weight > 0) {
@@ -78,17 +77,15 @@ export function decodeHeatmap(raw: string): DecodedHeatmap {
       count -= fillCurrentRow;
       row += 1;
       col = 0;
-      lastWeight = -1;
       if (row >= header.height) break;
     }
-
+  
     if (row >= header.height) break;
-
+  
     if (count > 0 && weight > 0) {
       grid.fill(weight, row * header.width + col, row * header.width + col + count);
     }
     col += count;
-    lastWeight = weight;
   }
 
   return { header, grid };
