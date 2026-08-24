@@ -3,7 +3,7 @@ import "./Suscribers.scss";
 import toast from "react-hot-toast";
 import html2canvas from "html2canvas";
 import { refreshSuscribers } from "../../server/server";
-import refreshButton from "../../assets/refreshButton.png";
+import { ResetIcon } from "../capturer/Live";
 
 // =====================================================================
 // TIPOS
@@ -351,7 +351,7 @@ const Suscribers: React.FC = () => {
               autoComplete="off"
             />
             <button className="monitoring__search-button" type="submit" disabled={isFetchingNodo}>
-              <img src={refreshButton} alt="" />
+                <ResetIcon className="suscribers__img"/>
             </button>
           </form>
         </header>
@@ -464,7 +464,7 @@ const Suscribers: React.FC = () => {
         {!isFetchingNodo && !hayNodoConsultado && (
           <div className="suscribers__empty">
             <span className="suscribers__empty-icon">
-              <img src={refreshButton}></img>
+              <ResetIcon className="suscribers__img"/>
             </span>
             <h2 className="suscribers__empty-title">Buscá un abonado</h2>
             <p className="suscribers__empty-text">Ingresá un nodo para empezar a buscar.</p>

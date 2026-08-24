@@ -36,7 +36,8 @@ export const validatedOutput = (server : Status, msj: string) => {
         toast.error("Nodo no encontrado, verifica el nodo ingresado");
         return false; 
     } else if (server.status === 401) {
-        toast.error("Credenciales incorrectas")
+        toast.error("Credenciales incorrectas");
+        window.location.href = "/";
         return false;  
     } else if (server.status === 500) {
         toast.error("Error en el servidor, intenta nuevamente más tarde");

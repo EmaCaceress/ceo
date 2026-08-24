@@ -105,7 +105,11 @@
       transform: none;
     }
   }
-
+  &__img {
+    scale: 1.2;
+    width: 32px;
+    height: 32px;
+  }
   &__results {
     @include flex(column, flex-start, stretch, $space-lg);
   }

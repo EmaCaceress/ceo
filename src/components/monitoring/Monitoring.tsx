@@ -6,7 +6,7 @@ import arrow from "../../assets/arrow.png";
 import level from "../../assets/niveles.png";
 import users from "../../assets/abonados.png";
 import fec from "../../assets/conteo.png";
-import refreshButton from "../../assets/refreshButton.png";
+import { ResetIcon } from "../capturer/Live";
 
 interface SnrStats {
   average: number;
@@ -110,7 +110,7 @@ const Monitoring: React.FC = () => {
               type="submit"
               disabled={isLoading}
             >
-              <img src={refreshButton} alt="" />
+              <ResetIcon className="monitoring__img"/>
             </button>
           </form>
         </header>
@@ -202,7 +202,7 @@ const Monitoring: React.FC = () => {
         {!monitoringData && !isLoading && (
           <div className="monitoring__empty">
             <span className="monitoring__empty-icon">
-              <img src={refreshButton}></img>
+              <ResetIcon className="monitoring__img"/>
             </span>
 
             <h2 className="monitoring__empty-title">Buscá un nodo</h2>

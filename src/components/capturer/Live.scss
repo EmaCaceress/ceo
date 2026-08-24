@@ -1,0 +1,227 @@
+// Import plano — ajustá la ruta a donde tengas tus partials reales
+// ============================================================
+// IMPORTS
+// Ajustá las rutas según donde tengas tus partials reales.
+// ============================================================
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+// ============================================================
+// BLOQUE: spectrumLive
+// Caja completa del espectro: gráfico + barra de 3 botones.
+// ============================================================
+.spectrumLive {
+  @include flex($direction: column, $justify: flex-start, $align: stretch, $gap: 0);
+
+  width: 100%;
+  border-radius: $radius-md;
+  overflow: hidden;
+  font-family: $font-base;
+
+  // ----------------------------------------------------------
+  // ELEMENTO: canvasWrap
+  // Contenedor del <canvas>. Se convierte en pantalla completa
+  // con el modificador "--maximized".
+  // ----------------------------------------------------------
+  &__canvasWrap {
+    position: relative;
+    background: #262626;
+
+    &--maximized {
+      position: fixed !important;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: end;
+      padding: 2rem;
+      z-index: 9998;
+      width: 100vw;
+      height: 100vh;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: canvas
+  // El dibujo del espectro en sí (ancho fluido, alto automático).
+  // ----------------------------------------------------------
+  &__canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: $radius-sm;
+    background: #262626;
+    &--maximized {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vh;
+      height: 100vw;
+      object-fit: contain;
+      transform: translate(-50%, -50%) rotate(90deg);
+      max-width: none;
+      z-index: -1;
+    }
+ }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: placeholder
+  // Texto que se ve cuando todavía no hay ninguna muestra.
+  // ----------------------------------------------------------
+  &__placeholder {
+    @include center-absolute;
+    margin: 0;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    white-space: nowrap;
+    &--maximized{
+      rotate: 90deg;
+      top:60%;
+      left: 23%;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: legend
+  // Referencia de colores (máx / vivo / mín / umbral).
+  // ----------------------------------------------------------
+  &__legend {
+    @include flex($direction: row, $justify: flex-start, $align: center, $gap: $space-md);
+    flex-wrap: wrap;
+    padding: $space-xs $space-sm 0;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+
+    span {
+      @include flex($direction: row, $justify: flex-start, $align: center, $gap: $space-xs);
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: swatch
+  // Cuadradito de color que acompaña cada ítem de la leyenda.
+  // ----------------------------------------------------------
+  &__swatch {
+    width: 14px;
+    height: 3px;
+    display: inline-block;
+    border-radius: $radius-full;
+
+    &--max { background: #4aa3ff; }
+    &--live { background: #f2f2f2; }
+    &--min { background: #e0a23a; }
+    &--threshold { background: #e04040; }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: controls
+  // Barra inferior con los 3 botones (play / reset / maximizar).
+  // ----------------------------------------------------------
+  &__controls {
+    @include flex($direction: row, $justify: space-between, $align: center, $gap: 1.5rem);
+    margin-top: 1rem;
+    height: 60px;
+    &--maximized {
+      position: fixed !important;
+      bottom: 6rem;
+      width: auto;
+      left: 4.5rem;
+      max-width: 90vw;
+      z-index: 9999;
+      button {
+        rotate: 90deg;
+      }
+    }
+    button {
+      transition: none;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: btn
+  // Base compartida de los 3 botones. Cada uno se pinta con su
+  // propio modificador (--play / --reset / --maximize).
+  // ---------------------------------------------------------- 
+  &__btn {
+    position: relative;
+    overflow: hidden;
+    @include flex($direction: row, $justify: center, $align: center, $gap: 0);
+    @include transition(background-color);
+    outline: none;
+    width: 100%;
+    height: 100% !important;
+    border: none;
+    border-radius: $radius-md;
+    color: $color-bg;
+    cursor: pointer;
+    @include box-shadow(sm);
+    margin-bottom: 0px !important;
+    &:focus-visible {
+      outline: none;
+    }
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    @include hover {
+      &:not(:disabled) {
+        filter: brightness(1.08);
+      }
+    }
+
+    // Botón de play / stop (izquierda, morado — mismo lugar que en la captura)
+    &--play {
+      background: $color-primary;
+    }
+
+    // Botón de reset máx/mín (centro, verde)
+    &--reset {
+      background: $color-accent;
+    }
+
+    // Botón de pantalla completa (derecha, azul — igual que en la captura)
+    &--maximize {
+      background: $color-secondary-light;
+    }
+    &__btnIcon, svg {
+      position: relative;
+      z-index: 2;
+      @include flex;
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  // ----------------------------------------------------------
+  // ELEMENTO: btnIcon
+  // Ícono dentro del botón, siempre por encima de la barra de
+  // progreso (z-index mayor).
+  // ----------------------------------------------------------
+
+
+  // ----------------------------------------------------------
+  // ELEMENTO: progressFill
+  // "Caja que se descarga" dentro del botón de play: una franja
+  // que crece de izquierda a derecha durante "durationMs" y al
+  // terminar dispara onAnimationEnd (el botón vuelve a su color).
+  // ----------------------------------------------------------
+  &__progressFill {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    width: 0%;
+    background: $color-primary-ligth;
+    animation-name: spectrumLiveProgress;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+}
+
+// ============================================================
+// ANIMACIÓN: relleno del botón de play, de 0% a 100% de ancho
+// ============================================================
+@keyframes spectrumLiveProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}

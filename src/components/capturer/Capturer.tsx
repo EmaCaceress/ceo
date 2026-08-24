@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import './Capturer.scss';
-import { refresh } from "../../server/server";
+import { refresh, getSession, pollLive } from "../../server/server";
+import type { LiveSample } from "../../server/server";
 import { saveAs } from "file-saver";
 import toast from "react-hot-toast";
 import refreshIcon from '../../assets/refresh.png'
-import refreshButton from '../../assets/refreshButton.png';
 import downloadButton from '../../assets/downloadButton.png';
-import expandButton from '../../assets/expandButton.png';
+import Live, { MaximizeIcon, MinimizeIcon, ResetIcon } from "./Live";
+
 
 const Capturer: React.FC = () => {
     const [refreshDisable, setRefreshDisable] = React.useState<boolean>(false);
@@ -14,7 +15,9 @@ const Capturer: React.FC = () => {
     const [image, setImage] = React.useState<string | null>(null); //URL de la imagen a mostrar
     const [selector, setSelector] = React.useState<string>(""); //Salida seleccionada
     const [expand, setExpand] = React.useState<boolean>(false);
+    const [select, setSelect] = React.useState<boolean>(true); //true: captura, false: vivo
     const [nodo, setNodo] = React.useState<string>(""); //ID del nodo
+    useContext
     const upNodo = (e: string) => {
         setNodo(e);
         localStorage.setItem("nodo", e);
@@ -83,7 +86,26 @@ const Capturer: React.FC = () => {
         setImage(IMG ? `${IMG}?t=${Date.now()}` : refreshIcon); // Agrega un timestamp para evitar caché
         setRefreshDisable(false);
     };
-
+    const createSession = async (identify : string | number) =>{
+        const reqSession = await getSession({
+            nodo: String(identify),
+            username: localStorage.getItem("username") || "UNDEFINED",
+            tipo: localStorage.getItem("nodoType") || "legacy",
+          });
+          if (!reqSession) throw new Error("No se pudo obtener la sesión del equipo");
+          localStorage.setItem("sessionId", reqSession.sessionId || "");
+          localStorage.setItem("nodoType", reqSession.nodoType || "");
+    }
+    const fetchLiveStream = async (identify: string | number, seq: number): Promise<LiveSample> => {
+        const session = localStorage.getItem("sessionId");
+        if (seq === 0 && session === null) {
+            await createSession(identify);  // ✅
+        }
+        const raw = await pollLive(seq, createSession);
+        if (!raw) throw new Error("No se pudo obtener la muestra del poll");
+        return raw;
+    };
+    
     useEffect(() => {
         if (image === null){
             setImage(refreshIcon);
@@ -103,59 +125,76 @@ const Capturer: React.FC = () => {
                 <p className="description">
                 Solicita una captura de un nodo especifico.
                 </p>
+                <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase())}/>
+
             </div>
 
-                <section className="image-wrapper" >
-                    <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase())}/>
-
-                    <div>
-                        <div id="overlay" className="overlay-text" >{selector}</div>
+                <section className="image-wrapper">
+                    <div className="select">
+                        <div className={`${select ? "active" : ""}`} onClick={()=> setSelect(true)}>CAPTURA</div>
+                        <div className={`${!select ? "active" : ""}`} onClick={()=> setSelect(false)}>VIVO</div>
                     </div>
-                    {image ? <img src={image} alt="grafica" /> : null}
-
-                    <div className="containerButtons">
-                        <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()}><img className="containerButtons__img" src={refreshButton}/></button>
-                        <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton}/></button>
-                        <button id="btnExpand" className="expand" onClick={()=>setExpand(true)}><img className="containerButtons__img" src={expandButton}/></button>
-                    </div>
-
-                    {expand && (
-                        <div
-                        style={{
-                            position: "fixed",
-                            inset: 0,
-                            background: "rgba(0,0,0,0.95)",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "end",
-                            padding: "2rem",
-                            zIndex: 9999,
-                            width: "100vw",
-                            height: "100vh",
-                        }}
-                        >
-                            <img
-                                src={image || undefined}
-                                alt=""
-                                style={{
-                                    position: "absolute",
-                                    top: "50%",
-                                    left: "50%",
-                                    width: "100vh",
-                                    height: "100vw",
-                                    objectFit: "contain",
-                                    transform: "translate(-50%, -50%) rotate(90deg)",
-                                    maxWidth: "none",
-                                    zIndex: -1,
-                                }}
-                            />
-                            <div className="containerButtons" style={{position: "relative", bottom: "55px"}}>
-                                <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()}><img className="containerButtons__img" src={refreshButton} style={{rotate: "90deg"}}/></button>
-                                <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton} style={{rotate: "90deg"}}/></button>
-                                <button id="btnExpand" className="expand" onClick={()=>setExpand(false)}><img className="containerButtons__img" src={expandButton} style={{rotate: "90deg"}}/></button>
+                    {
+                        select 
+                        ? (
+                            <div className="capturer">
+        
+                                <div>
+                                    <div id="overlay" className="overlay-text" >{selector}</div>
+                                </div>
+                                {image ? <img src={image} alt="grafica" /> : null}
+        
+                                <div className="containerButtons">
+                                    <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()}><ResetIcon className="containerButtons__img"></ResetIcon></button>
+                                    <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton}/></button>
+                                    <button id="btnExpand" className="expand" onClick={()=>setExpand(true)}><MaximizeIcon className="containerButtons__img"/></button>
+                                </div>
+        
+                                {expand && (
+                                    <div
+                                    style={{
+                                        position: "fixed",
+                                        inset: 0,
+                                        background: "rgba(0,0,0,0.95)",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                        alignItems: "end",
+                                        padding: "2rem",
+                                        zIndex: 9999,
+                                        width: "100vw",
+                                        height: "100vh",
+                                    }}
+                                    >
+                                        <img
+                                            src={image || undefined}
+                                            alt=""
+                                            style={{
+                                                position: "absolute",
+                                                top: "50%",
+                                                left: "50%",
+                                                width: "100vh",
+                                                height: "100vw",
+                                                objectFit: "contain",
+                                                transform: "translate(-50%, -50%) rotate(90deg)",
+                                                maxWidth: "none",
+                                                zIndex: -1,
+                                            }}
+                                        />
+                                        <div className="containerButtons" style={{position: "relative", bottom: "55px"}}>
+                                            <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()} style={{rotate: "90deg"}}><ResetIcon className="containerButtons__img" /></button>
+                                            <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton} style={{rotate: "90deg"}}/></button>
+                                            <button id="btnExpand" className="expand" onClick={()=>setExpand(false)} style={{rotate: "90deg"}}><MinimizeIcon className="containerButtons__img"/></button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                        </div>
-                    )}
+                        )
+                        : (
+                            <div className="live">
+                                <Live identify={nodo} onFetchSample={fetchLiveStream}/>
+                            </div>
+                        )
+                    }
                 </section>
 
                 {/* <!-- Configuracion --> */}
