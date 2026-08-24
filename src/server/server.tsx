@@ -2,7 +2,7 @@ import { validatedInput, validatedOutput } from "../components/validated/Validat
 import { decodeHeatmap } from "../components/capturer/heatmapDecoder";
 import type { DecodedHeatmap } from "../components/capturer/heatmapDecoder";
 
-const server_url : string = "http://localhost:4000";  // import.meta.env.VITE_SERVER || 
+const server_url : string = import.meta.env.VITE_SERVER || "http://localhost:4000";  // 
 
 //--------------------------------------------------------------
 // Funciones para administrar la autenticación y autorización de usuarios
