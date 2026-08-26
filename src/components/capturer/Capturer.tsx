@@ -123,16 +123,18 @@ const Capturer: React.FC = () => {
             <div className="heading">
                 <h1 className="title">Espectro</h1>
                 <p className="description">
-                Solicita una captura de un nodo especifico.
+                {
+                    select ? "Solicita una captura de un nodo especifico." : "Solicita la transmisión de un nodo especifico."
+                }
                 </p>
-                <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase())}/>
+                <input className="search" type="text" id="nodo" placeholder="Ingrese un nodo" value={nodo} onChange={(e) => upNodo(e.target.value.toUpperCase().replace(/\s/g, ""))}/>
 
             </div>
 
                 <section className="image-wrapper">
                     <div className="select">
                         <div className={`${select ? "active" : ""}`} onClick={()=> setSelect(true)}>CAPTURA</div>
-                        <div className={`${!select ? "active" : ""}`} onClick={()=> setSelect(false)}>VIVO</div>
+                        <div className={`${!select ? "active" : ""}`} onClick={()=> setSelect(false)}>EN VIVO</div>
                     </div>
                     {
                         select 
@@ -142,8 +144,15 @@ const Capturer: React.FC = () => {
                                 <div>
                                     <div id="overlay" className="overlay-text" >{selector}</div>
                                 </div>
-                                {image ? <img src={image} alt="grafica" /> : null}
-        
+                                <div>
+                                    {image ? <img src={image} alt="grafica" style={{opacity: refreshDisable ? 0.3 : 1}}/> : null}
+                                    {refreshDisable && (
+                                        <div className="spectrumLive__loading">
+                                            <span className="spectrumLive__loader"  style={{opacity: 1}} />
+                                        </div>
+                                    )}
+                                </div>
+
                                 <div className="containerButtons">
                                     <button id="btnRefresh" className="refresh" disabled={refreshDisable} onClick={() => fetchAndSetImage()}><ResetIcon className="containerButtons__img"></ResetIcon></button>
                                     <button id="btnDownload" className="download" onClick={()=>downloadImage()}><img className="containerButtons__img" src={downloadButton}/></button>

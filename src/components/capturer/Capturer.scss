@@ -201,6 +201,7 @@
       border-radius: $radius-sm;
       font-weight: bold;
       font-size: $font-size-base;
+      z-index: 2;
       pointer-events: none;
     }
   }

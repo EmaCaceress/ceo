@@ -246,7 +246,7 @@ const weightToColor = (weight: number): [number, number, number, number] => {
 
 const Live: React.FC<LiveProps> = ({
   identify,
-  durationMs = 60_000,
+  durationMs = 90_000,
   intervalMs = 200,
   thresholdDb = -30,
   lowerThresholdDb,
@@ -508,8 +508,12 @@ const Live: React.FC<LiveProps> = ({
           height={675}
         />
 
-        {!liveData && <p className={`${cls.placeholder} ${isMaximized ? cls.placeholderMaximized : ""}`}>Sin datos todavía. Iniciá la captura.</p>}
-
+        {(!liveData && !isRunning) && <p className={`${cls.placeholder} ${isMaximized ? cls.placeholderMaximized : ""}`}>Sin datos todavía. Apreta en Iniciar.</p>}
+        {(!liveData && isRunning) && (
+          <div className="spectrumLive__loading">
+            <span className="spectrumLive__loader" />
+          </div>
+        )}
       </div>
 
       <div className={`${cls.controls} ${isMaximized ? cls.controlsMaximized : ""}`} >

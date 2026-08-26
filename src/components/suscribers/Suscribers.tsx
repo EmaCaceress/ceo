@@ -346,7 +346,7 @@ const Suscribers: React.FC = () => {
               className="suscribers__field-input"
               type="text"
               value={nodoInput}
-              onChange={(event) => upNodo(event.target.value.toUpperCase())}
+              onChange={(event) => upNodo(event.target.value.toUpperCase().replace(/\s/g, ""))}
               placeholder="Ej: RE18L"
               autoComplete="off"
             />

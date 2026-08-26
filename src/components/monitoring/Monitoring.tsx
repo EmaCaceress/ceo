@@ -99,7 +99,7 @@ const Monitoring: React.FC = () => {
               className="monitoring__search-input"
               type="text"
               value={node}
-              onChange={(event) => upNodo(event.target.value.toUpperCase())}
+              onChange={(event) => upNodo(event.target.value.toUpperCase().replace(/\s/g, ""))}
               placeholder="Ej: RE18L"
               maxLength={20}
               autoComplete="off"
